@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
         expo = atoi(argv[2]);
     }
 
-	clock_t start, finish;  //  declare start and final time
+	clock_t start, finish;  //  declare start and final time for each exponent to test the time of the algorithm
     start = clock();
 
 	for (int i = 1; i <= expo; i++){
@@ -43,9 +43,11 @@ int main(int argc, char *argv[]){
     	fileout.append(argument);
     	double h = (double) 1/(n+1);
     	double hh = h*h;
-        n = n-1;
+
+        n = n-1;                // Setup n
+
+        // Intialize variables and set values
     	mat A = zeros<mat>(n,n);
-        mat L, U;
     	vec b(n);  vec x(n);
     	A(0,0) = 2.0;  
     	A(0,1) = -1;  
@@ -54,6 +56,7 @@ int main(int argc, char *argv[]){
     	x(n-1) = x(0)+(n-1)*h; 
     	b(n-1) = hh*f(x(n-1));
 
+        // Set values along the entire matrix
     	for (int i = 1; i < n-1; i++) {
     		x(i) = x(i-1)+h; 
 			b(i) = hh*f(x(i));
@@ -67,9 +70,8 @@ int main(int argc, char *argv[]){
     	A(n-1,n-2) = -1.0;
         // Solve with armadillos solve function
     	vec ans = solve(A, b);
-		finish = clock();
-        printf("%f\n", ((finish - start)/(double) CLOCKS_PER_SEC ));
-        // Write out results in a text file
+
+        // Calculate the relative error and write the results in a text file
     	outfile.open(fileout);
        	outfile << setiosflags(ios::showpoint | ios::uppercase);
 	    for (int i = 0; i < n; i++) {
@@ -81,8 +83,10 @@ int main(int argc, char *argv[]){
 	    }
 
 	    outfile.close();
+
         // Print out time used for that exponent
-        
+        finish = clock();
+        printf("%f\n", ((finish - start)/(double) CLOCKS_PER_SEC ));
     }
 
 	return 0;

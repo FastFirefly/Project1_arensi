@@ -45,7 +45,10 @@ int main(int argc, char *argv[]){
     	double h = (double) 1/(n+1);	// Setup h and h*h
     	double hh = h*h;
 
-    	vec d(n+1), ans(n+1), b(n+1), x(n+1);	// Initilize vectors with specific values
+    	n = n-1;				// Setup n
+
+    	// Intialize variables and set values
+    	vec d(n+1), ans(n+1), b(n+1), x(n+1);
     	x(0) = h; x(n) = 1.0;  
     	b(0) = hh*f(x(0)); b(n) = hh*f(x(n)); 
     	d(0) = 2.0;  d(n) = 2.0;
@@ -69,7 +72,7 @@ int main(int argc, char *argv[]){
         		ans(i) = (b(i)+ans(i+1))/d(i);
         }
         
-		// Write out results in a text file
+		// Calculate the relative error and write the results in a text file
         outfile.open(fileout);
         outfile << setiosflags(ios::showpoint | ios::uppercase);
 		for (int i = 1; i < n; i++) {
@@ -80,6 +83,7 @@ int main(int argc, char *argv[]){
 	       	outfile << setw(15) << setprecision(8) << log10(RelativeError) << endl;
 	    }
 	    outfile.close();
+	    
 	    // Print out time used for that exponent
 	    finish = clock();
 	    printf("%f\n", ((finish - start)/(double) CLOCKS_PER_SEC ));
