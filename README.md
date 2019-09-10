@@ -19,4 +19,4 @@ and then run with: 		./test_c output_c 3
 This formula will work with all of the programs in this repository
 
 The output test files are provided to demonstrate the results of the programs. 
-The index was removed for graphing simplicity, but are in order: X   Approximaton   Exact   Relative Error
+The index was removed for graphing simplicity, but are in order: X |  Approximaton |  Exact |  Relative Error
